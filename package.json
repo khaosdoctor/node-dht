@@ -1,0 +1,9 @@
+{
+  "name": "node-dht",
+  "version": "1.0.0",
+  "description": "Simple DHT implementation for NodeJS",
+  "main": "index.js",
+  "repository": "https://github.com/khaosdoctor/node-dht.git",
+  "author": "Lucas Santos <lhs.santoss@gmail.com>",
+  "license": "MIT"
+}
