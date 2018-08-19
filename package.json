@@ -3,7 +3,13 @@
   "version": "1.0.0",
   "description": "Simple DHT implementation for NodeJS",
   "main": "index.js",
+  "scripts": {
+    "join": "node index.js"
+  },
   "repository": "https://github.com/khaosdoctor/node-dht.git",
   "author": "Lucas Santos <lhs.santoss@gmail.com>",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "knoblr": "^2.4.0"
+  }
 }
