@@ -1,11 +1,12 @@
 module.exports = {
   JOIN: 'JOIN', // Entrada na rede (enviado pelo próprio nó quando quiser participar para um nó conhecido da rede)
-  JOIN_ACK: 'JOIN_ACK', // Resposta de entrada na rede (Respondido pelo nó da rede que será o )
-  NEW_NODE: 'NEW_NODE',
-  NODE_GONE: 'NODE_GONE',
-  RETRIEVE: 'RETRIEVE',
-  FOUND: 'FOUND',
-  NOT_FOUND: 'NOT_FOUND',
-  STORE: 'STORE',
-  LEAVE: 'LEAVE'
+  JOIN_ACK: 'JOIN_ACK', // Resposta de entrada na rede (Respondido pelo nó da rede que será o nó responsável por checar a posição do novo nó)
+  NEW_NODE: 'NEW_NODE', // Enviada para o nó anterior comunicando a entrada de um novo nó
+  NODE_GONE: 'NODE_GONE', // Enviada para o predecessor pelo nó que está saindo da rede, para atualizar seu sucesso
+  RETRIEVE: 'RETRIEVE', // Enviado para a rede para buscar um par chave/valor
+  FOUND: 'FOUND', // Enviado para o nó que fez a busca avisando que o recurso procurado foi encontrado
+  NOT_FOUND: 'NOT_FOUND', // Enviado de volta para o nó que fez a busca informando que o recurso buscado não foi encontrado
+  TRANSFER: 'TRANSFER', // Pedido de transferência de um recurso da responsabilidade de um nó para outro nó
+  STORE: 'STORE', // Pedido de armazenamento de um recurso na rede
+  LEAVE: 'LEAVE' // Enviada pelo nó ao seu sucesso quando o mesmo vai sair da rede
 }
