@@ -50,19 +50,29 @@ function sendCommandTo (address, port, command, params, errorCb = handleError) {
 function createCommandPayload (command) {
   switch (command) {
     case commandMessages.JOIN:
-      return (address, port) => ({ nodeAddress: address, nodePort: parseInt(port, 10) })
+      return (address, port) => ({
+        nodeAddress: address,
+        nodePort: parseInt(port, 10),
+        id: generateHashFrom(`${address}:${parseInt(port, 10)}`)
+      })
     case commandMessages.JOIN_ACK:
-      return (previousNode) => ({
+      return () => ({
         previousNode: {
-          port: previousNode.port,
-          address: previousNode.address,
-          id: generateHashFrom(`${previousNode.address}:${previousNode.port}`)
+          port: global.previousNode.port,
+          ip: global.previousNode.ip,
+          id: global.previousNode.id
         },
         nextNode: {
           port: global.PORT,
-          address: global.ADDRESS,
+          ip: global.ADDRESS,
           id: global.myId
         }
+      })
+    case commandMessages.NEW_NODE:
+      return (ingressAddress, ingressPort, ingressId) => ({
+        ingressAddress,
+        ingressPort,
+        ingressId
       })
   }
 }
