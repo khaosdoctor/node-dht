@@ -5,14 +5,12 @@ const outSocket = require('./utils/socketClient')
 const logger = require('knoblr')
 
 // Propriedades do nó
+global.ADDRESS = '127.0.0.1'
+global.PORT = inSocket.getPort() // Porta atual que o nó está ouvindo
 global.fileList = {} // Vai armazenar a lista de arquivos deste nó no formato de dicionário chave/valor
-global.myId = hashMaker.generateHashFrom(
-  (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff).toString(16)
-) // ID deste nó (por padrão começa sempre com o maior hexa possível)
+global.myId = hashMaker.generateHashFrom(`${global.PORT}:${global.ADDRESS}`) // ID deste nó
 global.nextNode = { ip: null, port: null, id: null } // Informações do próximo nó
 global.previousNode = { ip: null, port: null, id: null } // Informações do nó anterior
-global.PORT = inSocket.getPort() // Porta atual que o nó está ouvindo
-global.ADDRESS = '127.0.0.1'
 
 /**
  * Tenta se conectar ao primeiro nó conhecido da rede
@@ -21,6 +19,9 @@ global.ADDRESS = '127.0.0.1'
 function connectToDHT (nodeList) {
   if (nodeList.length <= 0) {
     logger.info(`Nenhum nó encontrado, criando uma nova rede`) // Não há nós, então ele é o primeiro nó da DHT
+    global.myId = hashMaker.generateHashFrom(
+      (0xffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff).toString(16)
+    )
     return setUpUser()
   }
 

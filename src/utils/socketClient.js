@@ -53,14 +53,14 @@ function createCommandPayload (command) {
       return (address, port) => ({
         nodeAddress: address,
         nodePort: parseInt(port, 10),
-        id: generateHashFrom(`${address}:${parseInt(port, 10)}`)
+        id: global.myId
       })
     case commandMessages.JOIN_ACK:
       return () => ({
         previousNode: {
-          port: global.previousNode.port,
-          ip: global.previousNode.ip,
-          id: global.previousNode.id
+          port: global.previousNode.port || global.PORT,
+          ip: global.previousNode.ip || global.ADDRESS,
+          id: global.previousNode.id || global.myId
         },
         nextNode: {
           port: global.PORT,
