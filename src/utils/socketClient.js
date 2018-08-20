@@ -74,6 +74,21 @@ function createCommandPayload (command) {
         ingressPort,
         ingressId
       })
+    case commandMessages.LEAVE:
+      return (newPreviousNode) => ({
+        leavingNode: {
+          ip: global.ADDRESS,
+          port: global.PORT,
+          id: global.myId
+        },
+        newPreviousNode
+      })
+    case commandMessages.NODE_GONE:
+      return () => ({
+        nextIp: global.ADDRESS,
+        nextPort: global.PORT,
+        nextId: global.myId
+      })
   }
 }
 
