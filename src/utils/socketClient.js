@@ -91,6 +91,16 @@ function createCommandPayload (command) {
         nextPort: global.PORT,
         nextId: global.myId
       })
+    case commandMessages.TRANSFER:
+      return (key, value, sender) => ({
+        key,
+        value,
+        sender
+      })
+    case commandMessages.TRANSFER_ACK:
+      return (key) => ({
+        key
+      })
   }
 }
 

@@ -34,11 +34,31 @@ module.exports = (params) => {
       }
     }
 
+    // Atualiza o nó anterior para o novo nó ingressante
     global.previousNode = {
-      // Atualiza o nó anterior para o novo nó ingressante
       ip: params.nodeAddress,
       port: params.nodePort,
       id: params.id
+    }
+
+    // Realiza a transferência dos arquivos que não estão mais sob a responsabilidade deste nó
+    if (Object.keys(global.fileList).length > 0) {
+      // Para cada chave de arquivo (hash) armazenado na lista vamos testar se esse hash se encaixa na regra
+      // Depois vamos enviar o comando TRANSFER passando o arquivo para o nó que acabou de entrar
+      for (let fileHashName in global.fileList) {
+        if (fileHashName <= params.id) {
+          outSocket.sendCommandTo(
+            params.nodeAddress,
+            params.nodePort,
+            messageCommand.TRANSFER,
+            outSocket.createCommandPayload(messageCommand.TRANSFER)(fileHashName, global.fileList[fileHashName], {
+              ip: global.ADDRESS,
+              port: global.PORT,
+              id: global.myId
+            })
+          )
+        }
+      }
     }
   } else {
     // Se o ID não for maior, então temos que rotear a mensagem para o próximo nó
