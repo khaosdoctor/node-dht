@@ -4,7 +4,7 @@ const messageCommand = require('../config/messageStrings')
 module.exports = (params) => {
   const idChecksum = parseInt(global.myId, 16)
   const ingressNodeChecksum = parseInt(params.id, 16)
-  const nextNodeChecksum = parseInt(global.nextNode.id, 16)
+  const nextNodeChecksum = global.nextNode.id ? parseInt(global.nextNode.id, 16) : 0
   // Se o ID deste nó for o mais próximo do ingressante então ele é o sucessor
   // Fazemos a verificação de IP para saber se ele não está sozinho na rede, neste caso obrigatoriamente ele será o sucessor
   if (
