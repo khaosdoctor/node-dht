@@ -161,3 +161,5 @@ The folder structure looks like the following:
 ## Commands
 
 When the node connects you can type `help` into the terminal to get a list of all available commands along with their params.
+
+> © 2018 - [Lucas Santos](https://lsantos.me)
