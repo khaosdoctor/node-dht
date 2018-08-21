@@ -10,6 +10,8 @@ module.exports = (params) => {
   const searchKey = hashMaker.generateHashFrom(key)
   const resolvedLocation = path.resolve(saveLocation)
 
+  if (global.fileList[searchKey]) return saveFileToDisk(searchKey, resolvedLocation)
+
   if (global.nextNode.ip) {
     return outSocket.sendCommandTo(
       global.nextNode.ip,
@@ -24,6 +26,10 @@ module.exports = (params) => {
   }
 
   // Se só houver ele na rede
+  saveFileToDisk()
+}
+
+function saveFileToDisk (searchKey, saveLocation) {
   if (!global.fileList[searchKey]) return logger.error(`Could not find searched file`)
 
   logger.info('File exists locally. Saving...')
