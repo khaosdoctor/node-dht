@@ -6,5 +6,6 @@ module.exports = (params) => {
   -> retrieve <fileName> <storageLocation>: Retrieves <fileName> from the network and stores at <storageLocation>
   -> store <fileName> <fileContent>: Stores <fileContent> as <fileName> in the network
   -> help: Shows this
+  -> info: Shows node information
   `)
 }

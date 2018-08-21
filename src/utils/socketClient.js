@@ -83,6 +83,8 @@ function createCommandPayload (command) {
         },
         newPreviousNode
       })
+    case commandMessages.LEAVE_ACK:
+      return () => ({})
     case commandMessages.NODE_GONE:
       return () => ({
         nextIp: global.ADDRESS,

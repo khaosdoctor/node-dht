@@ -40,6 +40,7 @@ function connectToDHT (nodeList) {
     outSocket.createCommandPayload(commandMessages.JOIN)(global.ADDRESS, global.PORT),
     handleConnectionError
   )
+  setTimeout(setUpUser, 1500)
 }
 
 // Trata saídas bruscas jogando para um evento conhecido
@@ -48,9 +49,11 @@ function setUpExitProtocol () {
   // Evento conhecido de saída
   process.on('exit', (code) => {
     console.log() // Nova linha pelo ctrl+c
-    logger.info(`Disconnecting from DHT...`)
 
-    require('./consoleCommands/leave')(null) // Roda o comando de saída
+    if (code === 34) {
+      logger.info('Detecting exit')
+      require('./consoleCommands/leave')() // Roda o comando de saída
+    }
   })
 }
 
@@ -66,7 +69,7 @@ function setUpLocalTCPServer () {
 
   server.on('connection', (socket) => {
     // Abre a porta para recebimento de mensagens TCP
-    logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} connected to this server`)
+    // logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} connected to this server`)
 
     socket.on('data', (data) => {
       // Evento de handling de mensagens que chegam
@@ -76,7 +79,7 @@ function setUpLocalTCPServer () {
 
     socket.on('close', () => {
       // Quando um cliente desconecta deste socket
-      logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} disconnected from this server`)
+      // logger.info(`The client ${socket.remoteAddress}:${socket.remotePort} disconnected from this server`)
     })
   })
 }
@@ -105,6 +108,7 @@ function openStdIn () {
         case 'retrieve':
         case 'help':
         case 'leave':
+        case 'info':
           require(`./consoleCommands/${commandString}`)(params)
           break
         default:

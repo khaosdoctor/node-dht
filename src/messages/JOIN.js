@@ -5,7 +5,6 @@ module.exports = (params) => {
   // Se o ID dele for maior que o ID do nó ingressante então ele é o sucessor
   // Fazemos a verificação de IP para saber se ele não está sozinho na rede, neste caso obrigatoriamente ele será o sucessor
   if (global.myId >= params.id || !global.previousNode.ip) {
-    console.log('recebendo mensagem de JOIN')
     outSocket.sendCommandTo(
       // Envia a mensagem de OK para o nó que enviou o pedido de JOIN com o sucessor e o antecessor
       params.nodeAddress,
@@ -41,10 +40,7 @@ module.exports = (params) => {
       port: params.nodePort,
       id: params.id
     }
-    console.log('Nó sucessor:', global.nextNode)
-    console.log('Nó antecessor', global.previousNode)
   } else {
-    console.log('Repassando JOIN para o próximo nó da lista')
     // Se o ID não for maior, então temos que rotear a mensagem para o próximo nó
     outSocket.sendCommandTo(
       global.nextNode.ip,

@@ -8,5 +8,6 @@ module.exports = {
   NOT_FOUND: 'NOT_FOUND', // Enviado de volta para o nó que fez a busca informando que o recurso buscado não foi encontrado
   TRANSFER: 'TRANSFER', // Pedido de transferência de um recurso da responsabilidade de um nó para outro nó
   STORE: 'STORE', // Pedido de armazenamento de um recurso na rede
-  LEAVE: 'LEAVE' // Enviada pelo nó ao seu sucesso quando o mesmo vai sair da rede
+  LEAVE: 'LEAVE', // Enviada pelo nó ao seu sucessor quando o mesmo vai sair da rede
+  LEAVE_ACK: 'LEAVE_ACK' // Enviada pelo nó sucessor ao que enviou a mensagem leave para confirmar a saída
 }
