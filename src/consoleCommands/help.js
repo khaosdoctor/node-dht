@@ -7,5 +7,6 @@ module.exports = (params) => {
   -> store <fileName> <fileContent>: Stores <fileContent> as <fileName> in the network
   -> help: Shows this
   -> info: Shows node information
+  -> debug: Toggle debug mode
   `)
 }

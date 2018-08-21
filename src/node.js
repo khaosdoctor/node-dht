@@ -11,6 +11,8 @@ global.fileList = {} // Vai armazenar a lista de arquivos deste nó no formato d
 global.myId = hashMaker.generateHashFrom(`${global.PORT}:${global.ADDRESS}`) // ID deste nó
 global.nextNode = { ip: null, port: null, id: null } // Informações do próximo nó
 global.previousNode = { ip: null, port: null, id: null } // Informações do nó anterior
+global.stats = {}
+global.DEBUG = 0
 
 /**
  * Tenta se conectar ao primeiro nó conhecido da rede
@@ -74,6 +76,8 @@ function setUpLocalTCPServer () {
     socket.on('data', (data) => {
       // Evento de handling de mensagens que chegam
       const message = JSON.parse(data.toString())
+      global.stats[message.commandString] = (global.stats[message.commandString] || 0) + 1
+      if (global.DEBUG) console.log('### MESSAGE RECEIVED\n', message)
       require(`./messages/${message.commandString}`)(message.commandParams)
     })
 
@@ -108,6 +112,7 @@ function openStdIn () {
         case 'retrieve':
         case 'help':
         case 'leave':
+        case 'debug':
         case 'info':
           require(`./consoleCommands/${commandString}`)(params)
           break
