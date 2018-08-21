@@ -2,9 +2,15 @@ const outSocket = require('../utils/socketClient')
 const messageCommand = require('../config/messageStrings')
 
 module.exports = (params) => {
-  // Se o ID dele for maior que o ID do nó ingressante então ele é o sucessor
+  const idChecksum = parseInt(global.myId, 16)
+  const ingressNodeChecksum = parseInt(params.id, 16)
+  const nextNodeChecksum = parseInt(global.nextNode.id, 16)
+  // Se o ID deste nó for o mais próximo do ingressante então ele é o sucessor
   // Fazemos a verificação de IP para saber se ele não está sozinho na rede, neste caso obrigatoriamente ele será o sucessor
-  if (global.myId >= params.id || !global.previousNode.ip) {
+  if (
+    Math.abs(idChecksum - ingressNodeChecksum) >= Math.abs(nextNodeChecksum - ingressNodeChecksum) ||
+    !global.previousNode.ip
+  ) {
     outSocket.sendCommandTo(
       // Envia a mensagem de OK para o nó que enviou o pedido de JOIN com o sucessor e o antecessor
       params.nodeAddress,
@@ -46,7 +52,7 @@ module.exports = (params) => {
       // Para cada chave de arquivo (hash) armazenado na lista vamos testar se esse hash se encaixa na regra
       // Depois vamos enviar o comando TRANSFER passando o arquivo para o nó que acabou de entrar
       for (let fileHashName in global.fileList) {
-        if (fileHashName <= params.id) {
+        if (parseInt(fileHashName, 16) <= parseInt(params.id, 16)) {
           outSocket.sendCommandTo(
             params.nodeAddress,
             params.nodePort,

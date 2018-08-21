@@ -6,6 +6,16 @@ function generateHashFrom (something) {
   return hash
 }
 
+function encodeBase64 (value) {
+  return Buffer.from(value, 'utf-8').toString('base64')
+}
+
+function decodeBase64 (base64String) {
+  return Buffer.from(base64String, 'base64').toString()
+}
+
 module.exports = {
-  generateHashFrom
+  generateHashFrom,
+  encodeBase64,
+  decodeBase64
 }

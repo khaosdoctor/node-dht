@@ -101,6 +101,27 @@ function createCommandPayload (command) {
       return (key) => ({
         key
       })
+    case commandMessages.STORE:
+      return (key, value) => ({
+        key,
+        value
+      })
+    case commandMessages.RETRIEVE:
+      return (key, saveLocation) => ({
+        key,
+        saveLocation,
+        sender: {
+          ip: global.ADDRESS,
+          port: global.PORT,
+          id: global.myId
+        }
+      })
+    case commandMessages.FOUND:
+      return (key, value, saveLocation) => ({
+        key,
+        value,
+        saveLocation
+      })
   }
 }
 
