@@ -28,9 +28,7 @@ module.exports = (params) => {
       }
     }
 
-    // Só para não termos que dar um bind no evento, como tudo vai rodar em localhost
-    // Podemos usar um setTimeout para esperar os eventos de arquivos serem enviados
-    setTimeout(performExit, timeout)
+    performExit()
   }
   logger.info(`Disconnecting...`)
 }
