@@ -52,7 +52,8 @@ module.exports = (params) => {
       // Para cada chave de arquivo (hash) armazenado na lista vamos testar se esse hash se encaixa na regra
       // Depois vamos enviar o comando TRANSFER passando o arquivo para o nó que acabou de entrar
       for (let fileHashName in global.fileList) {
-        if (parseInt(fileHashName, 16) <= parseInt(params.id, 16)) {
+        const fileHashChecksum = parseInt(fileHashName, 16)
+        if (Math.abs(fileHashChecksum - idChecksum) >= Math.abs(fileHashChecksum - ingressNodeChecksum)) {
           outSocket.sendCommandTo(
             params.nodeAddress,
             params.nodePort,
